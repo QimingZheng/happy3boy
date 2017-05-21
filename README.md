@@ -24,5 +24,7 @@ https://pan.baidu.com/s/1eSlAFPC 提取码 6acs
 ### 已更新分词结果 在压缩文件内
 segmentation.rar
 
-
-
+### 文本处理代码与处理结果
+链接: http://pan.baidu.com/s/1nuGos33 密码: 86bw
+github有毒，传不了大文件
+处理文件的代码已上传
