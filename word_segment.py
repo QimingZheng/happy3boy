@@ -18,8 +18,8 @@ def document_segmentation(text):
         file.write(' ')
 
 def main():
-    #text=document_abtain("I://2017 编程之美/BoP2017_DBAQ_dev_train_data/BoP2017-DBQA.train.txt")
-    text=document_abtain("I://2017 编程之美/BoP2017_DBAQ_dev_train_data/BoP2017-DBQA.dev.txt")
+    #text=document_abtain("./BoP2017-DBQA.train.txt")
+    text=document_abtain("./BoP2017-DBQA.dev.txt")
     document_segmentation(text)
 
 
