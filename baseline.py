@@ -83,7 +83,7 @@ def similarity(question_vec,sentence_vec):
 
 def _main():
     print "ok\n"
-    d = load_vectors("vectors_dev.bin")
+    d = load_vectors("vectors_train.bin")
     print "ok\n"
     question_file=open("questions.txt",'r')
     print "ok\n"
@@ -101,11 +101,31 @@ def _main():
         document_text=jieba.cut(document_text)
         question_vec=sentence_to_matrix(d,question_text)
         sentence_vec=sentence_to_matrix(d,document_text)
-        try:
-            baseline_result.write('%f' % similarity(question_vec,sentence_vec))
-        except:
-            baseline_result.write('\n')
-
+        evaluation=0.0
+        i=1
+        for word_1 in sentence_vec:
+            now_best=0.0
+            for word_2 in question_vec:
+                tmp=0.0
+                word_1_size=0.0
+                word_2_size=0.0
+                for i in range(0,200):
+                    tmp+=word_1[i]*word_2[i]
+                    word_1_size+=word_1[i]*word_1[i]
+                    word_2_size+=word_2[i]*word_2[i]
+                if word_1_size!=0 and word_2_size!=0:
+                    tmp=tmp/(math.sqrt(word_1_size)*math.sqrt(word_2_size))
+                now_best=max(now_best,tmp)
+            i=i+1
+            evaluation=evaluation+now_best
+        evaluation=evaluation/i
+        baseline_result.write('%f' % evaluation)
+        #print evaluation
+        #print '\t'
+        #print question_text
+        #print '\t'
+        #print document_text
+        baseline_result.write('\n')
 
 
 
