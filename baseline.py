@@ -4,6 +4,7 @@ import struct
 import math
 import numpy as np
 import os
+import jieba
 
 #reload(sys)
 #sys.setdefaultencoding( "utf-8" )
@@ -45,8 +46,12 @@ def load_vectors(input):
 
 
 def search_vector(d,word):
-    print d[word]
-    return 1
+    if word!='\n':
+        try:
+            return d[word]
+        except:
+            return [0]*200
+    return [0]*200
 
 
 def sentence_to_matrix(d,sentence):
@@ -56,10 +61,10 @@ def sentence_to_matrix(d,sentence):
     return vec
 
 def same(word_1,word_2):
+    re=0
     for i in range(0,200):
-        if(word_1[i]!=word_2[i]):
-            return False
-    return True
+        re=re+word_1[i]*word_2[i]
+    return re
 
 def similarity(question_vec,sentence_vec):
     result = 0.00
@@ -67,13 +72,17 @@ def similarity(question_vec,sentence_vec):
     for word_1 in sentence_vec :
         tmp=0.00
         for word_2 in question_vec:
-             tmp=max(tmp,same(word_2,word_1))
+            #print word_1
+            #print word_2
+            if word_1!=None and word_2!=None:
+                tmp=max( tmp , same(word_2,word_1))
         i=i+1
-        result_=tmp
+        result_=result+tmp
     return result/i
 
 
 def _main():
+    print u'\u5efa\u8865'
     print "ok\n"
     d = load_vectors("vectors_dev.bin")
     print "ok\n"
@@ -82,30 +91,24 @@ def _main():
     document_file=open("document.txt",'r')
     print "ok\n"
     baseline_result=open("baseline_result.txt",'w')
-    question_text=question_file.read()
-    document_text=document_file.read()
-    question_vec=[[0]*200]*1000
-    sentence_vec=[[0]*200]*1000
-    i=0
-    for question in question_text:
-        sentence=document_text[i]
-        print question
-        print sentence
-        i=i+1
-        question_vec=sentence_to_matrix(d,question.encode("utf8"))
-        sentence_vec=sentence_to_matrix(d,sentence.encode("utf8"))
-        baseline_result.write(similarity(question_vec,sentence_vec))
-        baseline_result.write('\n')
-    return
+    while 1:
+        question_text=question_file.readline()
+        document_text=document_file.readline()
+        if (not question_text) or (not document_text):
+            break
+        question_vec=[[0]*200]*1000
+        sentence_vec=[[0]*200]*1000
+        question_text=jieba.cut(question_text)
+        document_text=jieba.cut(document_text)
+        question_vec=sentence_to_matrix(d,question_text)
+        sentence_vec=sentence_to_matrix(d,document_text)
+        try:
+            baseline_result.write('%f' % similarity(question_vec,sentence_vec))
+        except:
+            baseline_result.write('\n')
+
+
 
 
 _main()
-
-
-
-
-
-
-
-
 
