@@ -11,7 +11,7 @@ https://pan.baidu.com/s/1eSlAFPC 提取码 6acs
 词向量结果文本文件 vector_train.txt 和 vector_dev.txt
 
 词向量结果二进制文件 vector_train.bin 和 vector_dev.bin
-
+更新：**vector.bin**，question_document.txt生成
 分词结果 segmentation_results_train.txt 和 segmentation_results_train.txt
 
 ### 数据预处理
