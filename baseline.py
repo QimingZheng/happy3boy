@@ -82,7 +82,6 @@ def similarity(question_vec,sentence_vec):
 
 
 def _main():
-    print u'\u5efa\u8865'
     print "ok\n"
     d = load_vectors("vectors_dev.bin")
     print "ok\n"
