@@ -90,3 +90,7 @@ https://github.com/miyyer/dan
 5） 从表中查询每句文章与问题的关联性即预测结果
 
 我先看代码 。。
+
+新发现：
+
+https://medium.com/@devnag/pointer-networks-in-tensorflow-with-sample-code-14645063f264
